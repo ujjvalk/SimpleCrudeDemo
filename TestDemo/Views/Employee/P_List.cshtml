@@ -1,0 +1,35 @@
+﻿@model TestDemo.Models.CustomModels.EmpModel
+
+<input type="hidden" value="@ViewBag.Successmessage" id="SuccessMessage" />
+<table id="example" class="display table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Designation</th>
+            <th>Hobby</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.empList)
+        {
+            <tr>
+                <td>@item.EmpName</td>
+                <td>@item.EmpEmail</td>s
+                <td>@item.EmpGender</td>
+                <td>@item.EmpAddress</td>
+                <td>@item.DesName</td>
+                <td>@item.HName</td>
+                <td style="text-align:center;">
+                    @Ajax.ActionLink(" ", "Edit", new { id =item.EmpId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "_Form", OnSuccess = "scrolltop();" }, new { @Class = "btn btn-info glyphicon glyphicon-edit icon-white", @id = "btnedit" })
+                    <a onclick="DeleteRecords('@item.EmpId', 'Y') " href="javascript:;" class="btn btn-danger glyphicon glyphicon-trash icon-white"></a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

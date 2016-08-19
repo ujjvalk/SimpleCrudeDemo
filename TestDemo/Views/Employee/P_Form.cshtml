@@ -1,0 +1,73 @@
+﻿@model TestDemo.Models.CustomModels.EmpModel
+
+@using (Ajax.BeginForm("Employee", "Employee", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();Datatable();OnReset();", OnBegin = "return onBegine(); fnvalidation();" }))
+{
+   
+    @Html.HiddenFor(m => m.EmpId, new { @class = "form-control formcontrol" })
+
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Name*</label>
+        <div class="col-md-4">
+            @Html.TextBox("EmpName", Model.EmpName, new { @class = "form-control formcontrol", @placeholder = "Name", @title = "Name", required = "required", @maxlength = "50" })
+           
+        </div>
+
+        <label class="col-md-1 control-label">Email*</label>
+        <div class="col-md-3">
+            @Html.TextBox("EmpEmail", Model.EmpEmail, new { @class = "form-control formcontrol", @placeholder = "Email", @title = "Name", required = "required", @maxlength = "100" })
+           
+        </div>
+        <label class="col-md-2 formcontrol" style="color:red" id="emailError"></label>
+    </div>
+    
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Designation*</label>
+        <div class="col-md-4">
+            @Html.DropDownList("EmpDesignation", (IEnumerable<SelectListItem>)ViewBag.Designation, "Select Designation", new { @class = "form-control formcontrol", @required = "required" })
+           
+        </div>
+
+        <label class="col-md-1 control-label">Address</label>
+        <div class="col-md-3">
+            @Html.TextArea("EmpAddress", Model.EmpAddress, new { @class = "form-control formcontrol", @placeholder = "Address", @title = "Address" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Gender</label>
+        <div class="col-md-4">
+            @if (Model.EmpGender == "Female")
+            {
+                <label class="col-md-2 control-label" style="">Male</label><div class="col-md-2">   @Html.RadioButton("EmpGender", "Male", new { @class = "formcontrol", @id = "radMale" })</div>
+                <label class="col-md-2 control-label">Female</label> <div class="col-md-2">@Html.RadioButton("EmpGender", "Female", true, new { @class = "formcontrol", @id = "radFemale" })</div>
+            }
+            else
+            {
+                <label class="col-md-2 control-label">Male</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Male", true, new { @class = "formcontrol", @id = "radMale" })</div>
+                <label class="col-md-2 control-label">Female</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Female", new { @class = "formcontrol", @id = "radFemale" })</div>
+            }
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Hobby</label>
+        <div class="col-md-6">
+            @for (int i = 0; i < Model.hbList.Count; i++)
+            {
+                @Html.CheckBoxFor(m => Model.hbList[i].selelcted, new { @class = "formcontrol" }) <span>&nbsp;</span>
+                @Model.hbList[i].HName<span>&nbsp;</span>
+                @Html.HiddenFor(m => Model.hbList[i].ID)
+                @Html.HiddenFor(m => Model.hbList[i].HName)
+            }
+        </div>
+        <label class="col-md-4 formcontrol" style="color:red" id="checkBoxError"></label>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-offset-2 col-lg-10">
+            <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
+            <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
+        </div>
+    </div>
+}
