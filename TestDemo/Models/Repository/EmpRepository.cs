@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using TestDemo.Models.CustomModels;
-using TestDemo.Models;
 
 namespace TestDemo.Models.Repository
 {
