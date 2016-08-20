@@ -199,9 +199,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Data.sql" />
+    <Content Include="App_Data\20_AUG Schema And Data.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\notavailable.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -241,6 +242,15 @@
     <Content Include="Scripts\swal\sweetalert.css" />
     <Content Include="Scripts\swal\sweetalert.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Upload\636073104330105039.jpg" />
+    <Content Include="Upload\636073104688192104.jpg" />
+    <Content Include="Upload\636073105012436828.jpg" />
+    <Content Include="Upload\636073105202394698.jpg" />
+    <Content Include="Upload\636073105324169884.png" />
+    <Content Include="Upload\636073105467034324.jpg" />
+    <Content Include="Upload\636073105513896307.png" />
+    <Content Include="Upload\636073105726759964.jpg" />
+    <Content Include="Upload\636073108045406720.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

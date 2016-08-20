@@ -28,6 +28,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="EmpEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmpImage" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tblHobby">
           <Key>
@@ -47,8 +48,8 @@
       <Schema Namespace="TestDemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TestDemoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblDesignations" EntityType="TestDemoModel.tblDesignation" />
-          <EntitySet Name="tblEmployees" EntityType="TestDemoModel.tblEmployee" />
           <EntitySet Name="tblHobbies" EntityType="TestDemoModel.tblHobby" />
+          <EntitySet Name="tblEmployees" EntityType="TestDemoModel.tblEmployee" />
         </EntityContainer>
         <EntityType Name="tblDesignation">
           <Key>
@@ -56,6 +57,13 @@
           </Key>
           <Property Name="DesignationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DesName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblHobby">
+          <Key>
+            <PropertyRef Name="HobbyId" />
+          </Key>
+          <Property Name="HobbyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblEmployee">
           <Key>
@@ -73,13 +81,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="EmpEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblHobby">
-          <Key>
-            <PropertyRef Name="HobbyId" />
-          </Key>
-          <Property Name="HobbyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmpImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -95,9 +97,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblHobbies">
+            <EntityTypeMapping TypeName="TestDemoModel.tblHobby">
+              <MappingFragment StoreEntitySet="tblHobby">
+                <ScalarProperty Name="HName" ColumnName="HName" />
+                <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblEmployees">
             <EntityTypeMapping TypeName="TestDemoModel.tblEmployee">
               <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="EmpImage" ColumnName="EmpImage" />
                 <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -110,14 +121,6 @@
                 <ScalarProperty Name="EmpAddress" ColumnName="EmpAddress" />
                 <ScalarProperty Name="EmpName" ColumnName="EmpName" />
                 <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblHobbies">
-            <EntityTypeMapping TypeName="TestDemoModel.tblHobby">
-              <MappingFragment StoreEntitySet="tblHobby">
-                <ScalarProperty Name="HName" ColumnName="HName" />
-                <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

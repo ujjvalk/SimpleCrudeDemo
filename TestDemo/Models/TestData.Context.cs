@@ -26,7 +26,7 @@ namespace TestDemo.Models
         }
     
         public virtual DbSet<tblDesignation> tblDesignations { get; set; }
-        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblHobby> tblHobbies { get; set; }
+        public virtual DbSet<tblEmployee> tblEmployees { get; set; }
     }
 }

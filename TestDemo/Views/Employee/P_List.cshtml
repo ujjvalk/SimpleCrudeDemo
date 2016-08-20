@@ -1,7 +1,7 @@
 ﻿@model TestDemo.Models.CustomModels.EmpModel
 
 <input type="hidden" value="@ViewBag.Successmessage" id="SuccessMessage" />
-<table id="example" class="display table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="example" class="display example table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Name</th>
@@ -10,6 +10,7 @@
             <th>Address</th>
             <th>Designation</th>
             <th>Hobby</th>
+            <th>Image</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -19,13 +20,15 @@
         {
             <tr>
                 <td>@item.EmpName</td>
-                <td>@item.EmpEmail</td>s
+                <td>@item.EmpEmail</td>
                 <td>@item.EmpGender</td>
                 <td>@item.EmpAddress</td>
                 <td>@item.DesName</td>
                 <td>@item.HName</td>
+                <td><img src="@item.EmpImage" width="50px" height="50px" /></td>
                 <td style="text-align:center;">
-                    @Ajax.ActionLink(" ", "Edit", new { id =item.EmpId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "_Form", OnSuccess = "scrolltop();" }, new { @Class = "btn btn-info glyphicon glyphicon-edit icon-white", @id = "btnedit" })
+                    @Ajax.ActionLink(" ", "Edit", new { id = item.EmpId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "_Form", OnSuccess = "scrolltop();", OnComplete = "edit();" }, new { @Class = "btn btn-info glyphicon glyphicon-edit icon-white", @id = "btnedit" })
+
                     <a onclick="DeleteRecords('@item.EmpId', 'Y') " href="javascript:;" class="btn btn-danger glyphicon glyphicon-trash icon-white"></a>
                 </td>
             </tr>

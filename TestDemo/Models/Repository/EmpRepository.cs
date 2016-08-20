@@ -104,6 +104,7 @@ namespace TestDemo.Models.Repository
                                                DesName = j.DesName,
                                                EmpHobby = e.EmpHobby,
                                                EmpEmail = e.EmpEmail,
+                                               EmpImage =e.EmpImage,
                                                
                                            })
                                            .AsEnumerable()
@@ -115,7 +116,8 @@ namespace TestDemo.Models.Repository
                                                EmpGender = x.EmpGender,
                                                DesName = x.DesName,
                                                HName = GetHobbyString(x.EmpHobby),
-                                               EmpEmail = x.EmpEmail
+                                               EmpEmail = x.EmpEmail,
+                                               EmpImage = x.EmpImage
                                            }).ToList();
                 }
                 return pageDetails;
@@ -142,6 +144,7 @@ namespace TestDemo.Models.Repository
                 details.EmpDesignation = data.EmpDesignation;
                 details.EmpGender = data.EmpGender;
                 details.EmpHobby = data.EmpHobby;
+                details.EmpImage = data.EmpImage;
                 return details;
             }
         }
@@ -167,6 +170,7 @@ namespace TestDemo.Models.Repository
                         pageData.EmpDesignation = model.EmpDesignation;
                         pageData.EmpHobby = model.EmpHobby;
                         pageData.EmpGender = model.EmpGender;
+                        pageData.EmpImage = model.EmpImage;
                         db.tblEmployees.Add(pageData);
                         db.SaveChanges();
                     }
@@ -199,6 +203,7 @@ namespace TestDemo.Models.Repository
                         data.EmpDesignation = emp.EmpDesignation;
                         data.EmpAddress = emp.EmpAddress;
                         data.IsActive = emp.IsActive;
+                        data.EmpImage = emp.EmpImage;
                         db.SaveChanges();
                         return true;
                     }

@@ -1,30 +1,28 @@
 ﻿@model TestDemo.Models.CustomModels.EmpModel
 
-@using (Ajax.BeginForm("Employee", "Employee", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();Datatable();OnReset();", OnBegin = "return onBegine(); fnvalidation();" }))
+@using (Ajax.BeginForm("Employee", "Employee", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();OnReset();", OnBegin = "return onBegine(); fnvalidation();" }))
 {
-   
+
     @Html.HiddenFor(m => m.EmpId, new { @class = "form-control formcontrol" })
+    @*@Html.HiddenFor(m => m.EmpImage, new { @class = "form-control formcontrol" })*@
 
     <div class="form-group row">
         <label class="col-md-2 control-label">Name*</label>
         <div class="col-md-4">
             @Html.TextBox("EmpName", Model.EmpName, new { @class = "form-control formcontrol", @placeholder = "Name", @title = "Name", required = "required", @maxlength = "50" })
-           
         </div>
 
         <label class="col-md-1 control-label">Email*</label>
         <div class="col-md-3">
             @Html.TextBox("EmpEmail", Model.EmpEmail, new { @class = "form-control formcontrol", @placeholder = "Email", @title = "Name", required = "required", @maxlength = "100" })
-           
         </div>
         <label class="col-md-2 formcontrol" style="color:red" id="emailError"></label>
     </div>
-    
+
     <div class="form-group row">
         <label class="col-md-2 control-label">Designation*</label>
         <div class="col-md-4">
             @Html.DropDownList("EmpDesignation", (IEnumerable<SelectListItem>)ViewBag.Designation, "Select Designation", new { @class = "form-control formcontrol", @required = "required" })
-           
         </div>
 
         <label class="col-md-1 control-label">Address</label>
@@ -38,21 +36,20 @@
         <div class="col-md-4">
             @if (Model.EmpGender == "Female")
             {
-                <label class="col-md-2 control-label" style="">Male</label><div class="col-md-2">   @Html.RadioButton("EmpGender", "Male", new { @class = "formcontrol", @id = "radMale" })</div>
-                <label class="col-md-2 control-label">Female</label> <div class="col-md-2">@Html.RadioButton("EmpGender", "Female", true, new { @class = "formcontrol", @id = "radFemale" })</div>
+                <label class="col-md-2 control-label" style="">Male</label><div class="col-md-2"> @Html.RadioButton("EmpGender", "Male", new { @class = "formcontrol", @id = "radMale" })</div>
+                <label class="col-md-2 control-label">Female</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Female", true, new { @class = "formcontrol", @id = "radFemale" })</div>
             }
             else
             {
                 <label class="col-md-2 control-label">Male</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Male", true, new { @class = "formcontrol", @id = "radMale" })</div>
                 <label class="col-md-2 control-label">Female</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Female", new { @class = "formcontrol", @id = "radFemale" })</div>
             }
-
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-md-2 control-label">Hobby</label>
-        <div class="col-md-6">
+        <div class="col-md-8">
             @for (int i = 0; i < Model.hbList.Count; i++)
             {
                 @Html.CheckBoxFor(m => Model.hbList[i].selelcted, new { @class = "formcontrol" }) <span>&nbsp;</span>
@@ -61,7 +58,29 @@
                 @Html.HiddenFor(m => Model.hbList[i].HName)
             }
         </div>
-        <label class="col-md-4 formcontrol" style="color:red" id="checkBoxError"></label>
+        <label class="col-md-2 formcontrol" style="color:red" id="checkBoxError"></label>
+    </div>
+    <div class="form-group row">
+        <label for="EmpImage" class="col-md-2 control-label">Image</label>
+        <div class="col-md-8">
+            <input type="file" class="default formcontrol" id="EmpImage" style="color:transparent;width:110px; border:0px" />
+            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 160px; max-height: 150px; line-height: 20px; margin-top: 15px;">
+                @if (Model != null && Model.EmpImage != null)
+                {
+                    <img src="@Model.EmpImage" alt="" id="Image" />
+                }
+                else
+                {
+                    <img src="../../Content/images/notavailable.png" alt="no image" id="Image" />
+                }
+            </div>
+            <div style="display:none;" id="divchange">
+                <span class="btn btn-info btn-file">
+                    <span class="fileupload-exists" onclick="$('#EmpImage').click();"><i class="fa fa-undo"></i> Change</span>
+                </span>&nbsp;
+                <a href="javascript:void(0);" class="btn btn-danger fileupload-exists" onclick="RemoveImage();"><i class="fa fa-trash-o"></i> Remove</a>
+            </div>
+        </div>
     </div>
 
     <div class="form-group row">

@@ -39,6 +39,7 @@ namespace TestDemo.Models.CustomModels
 
         public List<HobbyList> hbList { get; set; }
 
+        public string EmpImage { get; set; }
     }
 
     public class HobbyList

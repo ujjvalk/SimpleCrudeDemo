@@ -26,5 +26,6 @@ namespace TestDemo.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string EmpEmail { get; set; }
+        public string EmpImage { get; set; }
     }
 }

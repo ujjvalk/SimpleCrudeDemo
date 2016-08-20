@@ -2,9 +2,9 @@
     ViewBag.Title = "Employee";
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
-<h2>Employee</h2>
+<h2 style="text-align:center;">Employee</h2>
 
-<div class="panel panel-default">
+<div class="panel panel-default container">
     <div class="panel-heading">
         <h3 class="panel-title">Employee Form</h3>
     </div>
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default container">
     <div class="panel-heading">
         <h3 class="panel-title">Employee List</h3>
     </div>
@@ -24,23 +24,24 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            "aoColumnDefs": [{
-                "bSortable": false,
-                'aTargets': [6]
-            }]
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6,7] }],
+            "bDestroy": true
+        });
+        //Upload image
+        $("#EmpImage").change(function () {
+            readURL(this);
         });
     });
 
     function OnReset() {
         $("#radMale").prop("checked", true);
+        $('#example').dataTable({
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6,7] }],
+            "bDestroy": true
+        });
+        RemoveImage();
     }
 
-    function Datatable() {
-        $('#example').DataTable({
-            "bSortable": false,
-            'aTargets': [6]
-        });
-    }
     function onBegine() {
         if (Validate_Email() == true) {
             if (Validate_Checkbox() == true) {
@@ -137,4 +138,68 @@
                    }
                });
     }
+
+
+    //ImageUpload
+    function edit() {
+        $("#EmpImage").change(function () {
+            readURL(this);
+        });
+    }
+
+    function readURL(input) {
+        var width, height;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    width = this.width;
+                    height = this.height;
+                }
+                img.src = e.target.result;
+                var path = e.target.result;
+                setTimeout(function () {
+                    uploadImage(width, height, path);
+                }, 500);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function uploadImage(width, height, path) {
+        if (width === 400 && height === 400) {
+            $('#Image').attr('src', path);
+            $('#divchange').css('display', 'block');
+            var data = new FormData();
+            data.append('file', $('#EmpImage')[0].files[0]);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadFile")',
+                data: data,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function () {
+                }
+            });
+        }
+        else {
+            swal({
+                title: "Size validation",
+                text: "Required image size is 400 X 400. :(",
+                type: "error",
+                timer: 2000
+            });
+            //ShowError("Required logo size is 400 X 400. :(");
+            RemoveImage();
+        }
+    }
+    
+    function RemoveImage() {
+        $('#Image').attr('src', '../Content/images/notavailable.png');
+        $("#EmpImage").val("");
+        $('#divchange').css('display', 'none');
+    }
+
 </script>

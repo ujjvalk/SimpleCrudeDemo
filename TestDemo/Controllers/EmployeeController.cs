@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -45,7 +46,7 @@ namespace TestDemo.Controllers
                         }
                     }
                 }
-
+                model.EmpImage = TempData["EmpImage"].ToString();
                 if (model.EmpId > 0)
                 {
                     flag = repo.EditData(model);
@@ -63,7 +64,6 @@ namespace TestDemo.Controllers
             }
         }
 
-        
         public ActionResult Edit(long id = 0)
         {
             using (var repo = new EmpRepository())
@@ -80,6 +80,7 @@ namespace TestDemo.Controllers
                         hobbyId = data.EmpHobby.Split(',');
                     }
                     data.hbList = repo.hbList(hobbyId);
+                    TempData["EmpImage"] = data.EmpImage;
                     return PartialView("P_Form", data);
                 }
                 return PartialView("P_Form");
@@ -95,5 +96,28 @@ namespace TestDemo.Controllers
                 return PartialView("P_List", model);
             }
         }
+
+        #region Upload File
+        [HttpPost]
+        public void UploadFile()
+        {
+            for (var i = 0; i < Request.Files.Count; i++)
+            {
+                var file = Request.Files[i];
+                if (file != null)
+                {
+                    var txt = DateTime.Now.Ticks;
+                    string filePath = @"/Upload/";
+                    if (!Directory.Exists(Server.MapPath(filePath)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(filePath));
+                    }
+                    var path = Server.MapPath(filePath) + txt + Path.GetExtension(file.FileName);
+                    file.SaveAs(path);
+                    TempData["EmpImage"] = filePath + txt + Path.GetExtension(file.FileName);
+                }
+            }
+        }
+        #endregion
     }
 }
