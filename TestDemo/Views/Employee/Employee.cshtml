@@ -3,8 +3,7 @@
     Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
 }
 <h2 style="text-align:center;">Employee</h2>
-
-<div class="panel panel-default container">
+<div class="panel panel-default ">
     <div class="panel-heading">
         <h3 class="panel-title">Employee Form</h3>
     </div>
@@ -13,7 +12,7 @@
     </div>
 </div>
 
-<div class="panel panel-default container">
+<div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Employee List</h3>
     </div>
@@ -21,6 +20,7 @@
         @Html.Partial("P_List")
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
@@ -118,7 +118,10 @@
                            data: { id: id },
                            success: function (i) {
                                document.getElementById('_List').innerHTML = i;
-                               Datatable();
+                               $('#example').dataTable({
+                                   "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6, 7] }],
+                                   "bDestroy": true
+                               });
                            }
                        });
                        swal({
