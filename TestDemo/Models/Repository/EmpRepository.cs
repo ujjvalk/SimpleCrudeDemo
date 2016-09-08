@@ -52,7 +52,7 @@ namespace TestDemo.Models.Repository
 
         public static string GetHobbyString(string id)
         {
-            string ret = "";
+            string ret = string.Empty;
 
             using (var db = new TestDemoEntities())
             {
@@ -63,7 +63,7 @@ namespace TestDemo.Models.Repository
                     {
                         long hid = Convert.ToInt64(item);
                         var data = db.tblHobbies.Where(e => e.HobbyId == hid).Select(x => x.HName).First();
-                        if (ret == "")
+                        if (string.IsNullOrEmpty(ret))
                         {
                             ret = data;
                         }
@@ -102,8 +102,8 @@ namespace TestDemo.Models.Repository
                                                DesName = j.DesName,
                                                EmpHobby = e.EmpHobby,
                                                EmpEmail = e.EmpEmail,
-                                               EmpImage =e.EmpImage,
-                                               
+                                               EmpImage = e.EmpImage,
+
                                            })
                                            .AsEnumerable()
                                            .Select(x => new EmpModel
@@ -122,7 +122,7 @@ namespace TestDemo.Models.Repository
             }
             catch (Exception)
             {
-                return null;
+                return new EmpModel();
             }
         }
         #endregion
@@ -246,7 +246,7 @@ namespace TestDemo.Models.Repository
 
         private void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!this._disposed)
             {
                 if (disposing)
                 {
@@ -256,12 +256,12 @@ namespace TestDemo.Models.Repository
                     }
                 }
             }
-            _disposed = true;
+            this._disposed = true;
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
