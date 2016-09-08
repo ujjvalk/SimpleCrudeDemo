@@ -1,0 +1,36 @@
+﻿@model TestDemo.Models.CustomModels.SliderModel
+
+@using (Ajax.BeginForm("Slider", "Slider", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnBegin = "fnvalidation();", OnSuccess = "fnSuccess();OnReset();" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(e => e.SliderId, new { @class = "form-control formcontrol" })
+    
+    <div class="form-group row">
+        <label for="EmpImage" class="col-md-2 control-label">Image</label>
+        <div class="col-md-8">
+            <input type="file" class="default formcontrol" required="required" multiple id="SImage" style="color:transparent;width:110px; border:0px" />
+            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 160px; max-height: 150px; line-height: 20px; margin-top: 15px;">
+                @if (Model != null && Model.SImage != null)
+                {
+                    <img src="@Model.SImage" alt="" id="Image" />
+                }
+                else
+                {
+                    <img src="../../Content/images/notavailable.png" alt="no image" id="Image" />
+                }
+            </div>
+            <div style="display:none;" id="divchange">
+                <span class="btn btn-info btn-file">
+                    <span class="fileupload-exists" onclick="$('#SImage').click();"><i class="fa fa-undo"></i> Change</span>
+                </span>&nbsp;
+                <a href="javascript:void(0);" class="btn btn-danger fileupload-exists" onclick="RemoveImage();"><i class="fa fa-trash-o"></i> Remove</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-lg-offset-2 col-lg-10">
+            <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
+            <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
+        </div>
+    </div>
+}
