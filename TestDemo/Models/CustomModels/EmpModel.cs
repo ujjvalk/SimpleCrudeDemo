@@ -6,6 +6,7 @@ namespace TestDemo.Models.CustomModels
 {
     public class EmpModel
     {
+        [Key]
         public long EmpId { get; set; }
          
         [Required(ErrorMessage = "Name is Required.")]
@@ -15,12 +16,12 @@ namespace TestDemo.Models.CustomModels
         public string EmpHobby { get; set; }
 
         [Required(ErrorMessage = "Employee Designation is Required.")]
-        public Nullable<long> EmpDesignation { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> DeletedDate { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public long? EmpDesignation { get; set; }
+        public bool? IsDelete { get; set; }
+        public bool? IsActive { get; set; }
+        public System.DateTime? DeletedDate { get; set; }
+        public System.DateTime? CreatedDate { get; set; }
+        public System.DateTime? ModifiedDate { get; set; }
 
         [Required(ErrorMessage = "Email is Requirde")]
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
