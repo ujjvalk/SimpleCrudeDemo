@@ -24,19 +24,27 @@
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
-            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6,7] }],
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6, 7] }],
             "bDestroy": true
         });
         //Upload image
         $("#EmpImage").change(function () {
             readURL(this);
         });
+        $('#Birthdate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: "today",
+            yearRange: "-100:+0",
+            dateFormat: 'dd-mm-yy',
+            defaultDate: new Date(1985, 00, 01)
+        });
     });
 
     function OnReset() {
         $("#radMale").prop("checked", true);
         $('#example').dataTable({
-            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6,7] }],
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6, 7] }],
             "bDestroy": true
         });
         RemoveImage();
@@ -145,9 +153,18 @@
 
     //ImageUpload
     function edit() {
+        $("#Birthdate").datepicker({
+             changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: "today",
+            dateFormat: 'dd-mm-yy',
+        });
+
         $("#EmpImage").change(function () {
             readURL(this);
         });
+        
     }
 
     function readURL(input) {
@@ -198,7 +215,7 @@
             RemoveImage();
         }
     }
-    
+
     function RemoveImage() {
         $('#Image').attr('src', '../Content/images/notavailable.png');
         $("#EmpImage").val("");

@@ -103,7 +103,7 @@ namespace TestDemo.Models.Repository
                                                EmpHobby = e.EmpHobby,
                                                EmpEmail = e.EmpEmail,
                                                EmpImage = e.EmpImage,
-
+                                               Birthdate = e.Birthdate
                                            })
                                            .AsEnumerable()
                                            .Select(x => new EmpModel
@@ -115,7 +115,8 @@ namespace TestDemo.Models.Repository
                                                DesName = x.DesName,
                                                HName = GetHobbyString(x.EmpHobby),
                                                EmpEmail = x.EmpEmail,
-                                               EmpImage = x.EmpImage
+                                               EmpImage = x.EmpImage,
+                                               Birthdate = x.Birthdate
                                            }).ToList();
                 }
                 return pageDetails;
@@ -143,6 +144,7 @@ namespace TestDemo.Models.Repository
                 details.EmpGender = data.EmpGender;
                 details.EmpHobby = data.EmpHobby;
                 details.EmpImage = data.EmpImage;
+                details.Birthdate = data.Birthdate;
                 return details;
             }
         }
@@ -169,6 +171,7 @@ namespace TestDemo.Models.Repository
                         pageData.EmpHobby = model.EmpHobby;
                         pageData.EmpGender = model.EmpGender;
                         pageData.EmpImage = model.EmpImage;
+                        pageData.Birthdate = model.Birthdate;
                         db.tblEmployees.Add(pageData);
                         db.SaveChanges();
                     }
@@ -202,6 +205,7 @@ namespace TestDemo.Models.Repository
                         data.EmpAddress = emp.EmpAddress;
                         data.IsActive = emp.IsActive;
                         data.EmpImage = emp.EmpImage;
+                        data.Birthdate = emp.Birthdate;
                         db.SaveChanges();
                         return true;
                     }

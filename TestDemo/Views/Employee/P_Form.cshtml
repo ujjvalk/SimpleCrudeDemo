@@ -13,7 +13,7 @@
 
         <label class="col-md-1 control-label">Email*</label>
         <div class="col-md-3">
-            @Html.TextBox("EmpEmail", Model.EmpEmail, new { @class = "form-control formcontrol", @placeholder = "Email", @title = "Name", required = "required", @maxlength = "100" })
+            @Html.TextBox("EmpEmail", Model.EmpEmail, new { @class = "form-control formcontrol", @placeholder = "Email", @title = "Email", required = "required", @maxlength = "100" })
         </div>
         <label class="col-md-2 formcontrol" style="color:red" id="emailError"></label>
     </div>
@@ -43,6 +43,19 @@
                 <label class="col-md-2 control-label">Male</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Male", true, new { @class = "formcontrol", @id = "radMale" })</div>
                 <label class="col-md-2 control-label">Female</label> <div class="col-md-2"> @Html.RadioButton("EmpGender", "Female", new { @class = "formcontrol", @id = "radFemale" })</div>
             }
+        </div>
+
+        <label class="col-md-1 control-label">Birthdate</label>
+        <div class='col-md-3'>
+            @if (Model.Birthdate != null)
+            {
+                @Html.TextBox("Birthdate", Model.Birthdate.Value.ToShortDateString(), new { @class = "form-control formcontrol", @placeholder = "Birthdate", @title = "Birthdate", @id = "Birthdate" })
+            }
+            else
+            {
+                @Html.TextBox("Birthdate", Model.Birthdate, new { @class = "form-control formcontrol", @placeholder = "Birthdate", @title = "Birthdate", @id = "Birthdate", @value = "01-01-2000" })
+            }
+
         </div>
     </div>
 
