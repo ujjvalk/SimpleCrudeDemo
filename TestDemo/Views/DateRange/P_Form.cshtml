@@ -1,0 +1,39 @@
+﻿@model TestDemo.Models.DateRange
+
+@using (Ajax.BeginForm("Index", "DateRange", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();", OnBegin = "fnvalidation();" }))
+{
+    @Html.HiddenFor(e => e.Id, new { @class = "form-control formcontrol" })
+    <div class="form-group row">
+        <label class="col-md-1 control-label">From Date</label>
+        <div class='col-md-3'>
+            @if (Model != null && Model.FromDate != null)
+            {
+                @Html.TextBox("FromDate", Model.FromDate.Value.ToShortDateString(), new { @class = "form-control formcontrol", @placeholder = "From Date", @title = "From Date", @id = "FromDate", @required = "required" })
+            }
+            else
+            {
+                @Html.TextBox("FromDate", null, new { @class = "form-control formcontrol", @placeholder = "From Date", @title = "From Date", @id = "FromDate", @value = "01-01-2000", @required = "required" })
+            }
+
+        </div>
+        <label class="col-md-1 control-label">To date</label>
+        <div class='col-md-3'>
+            @if (Model != null && Model.Todate != null)
+            {
+                @Html.TextBox("Todate", Model.Todate.Value.ToShortDateString(), new { @class = "form-control formcontrol", @placeholder = "To date", @title = "To date", @id = "Todate", @required = "required" })
+            }
+            else
+            {
+                @Html.TextBox("Todate", null, new { @class = "form-control formcontrol", @placeholder = "To date", @title = "To date", @id = "Todate", @value = "01-01-2000", @required = "required" })
+            }
+
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
+            <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
+        </div>
+    </div>
+
+
+
+}
