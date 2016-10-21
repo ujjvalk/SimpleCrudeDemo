@@ -1,0 +1,34 @@
+﻿
+@model TestDemo.Models.CustomModels.GeoLocationModel
+
+@using (Ajax.BeginForm("Index", "GeoLocation", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();", OnBegin = "fnvalidation();" }))
+{
+    @Html.HiddenFor(e => e.Id, new { @class = "form-control formcontrol" })
+
+    <div class="form-group row">
+
+        <label class="col-md-1 control-label">Address</label>
+        <div class='col-md-4'>
+            @Html.TextBox("GeoLocationAddress", Model.GeoLocationAddress, new { @class = "form-control formcontrol", @placeholder = "GeoLocationAddress", @title = "GeoLocationAddress", @id = "GeoLocationAddress", @required = "required" })
+        </div>
+        
+    </div>
+    <div class="form-group row">
+
+        <label class="col-md-1 control-label">Latitude</label>
+        <div class='col-md-3'>
+            @Html.TextBox("Latitude", Model.Latitude, new { @class = "form-control formcontrol", @placeholder = "Latitude", @title = "Latitude", @id = "Latitude", @required = "required" })
+        </div>
+
+        <label class="col-md-1 control-label">Longiude</label>
+        <div class='col-md-3'>
+            @Html.TextBox("Longiude", Model.Longiude, new { @class = "form-control formcontrol", @placeholder = "Longiude", @title = "Longiude", @id = "Longiude", @required = "required" })
+        </div>
+
+        <div class="col-lg-2">
+            <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
+            <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
+        </div>
+    </div>
+
+}

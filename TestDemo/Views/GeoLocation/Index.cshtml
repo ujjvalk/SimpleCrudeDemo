@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "GeoLocation";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAV0MbgQRg3pmNXINM42GNU9FLCsstTFRc&sensor=false&amp;libraries=places" type="text/javascript"></script>
+<script>
+    function initialize() {
+        var input = document.getElementById('GeoLocationAddress');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById('Latitude').value = place.geometry.location.lat();
+            document.getElementById('Longiude').value = place.geometry.location.lng();
+
+            //*Start GET Zip Code*//
+            //var latlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+            //geocoder = new google.maps.Geocoder();
+
+            //geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            //    if (status == google.maps.GeocoderStatus.OK) {
+            //        if (results[0]) {
+            //            for (j = 0; j < results[0].address_components.length; j++) {
+            //                if (results[0].address_components[j].types[0] == 'postal_code')
+            //                    //alert("Zip Code: " + results[0].address_components[j].short_name);
+            //                    document.getElementById('ZipCode').value = results[0].address_components[j].short_name;
+            //            }
+            //        }
+            //    } else {
+            //        alert("Geocoder failed due to: " + status);
+            //    }
+            //});
+            //*End GET Zip Code*//
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<h2 style="text-align:center;">GeoLocation</h2>
+<div class="panel panel-default ">
+    <div class="panel-heading">
+        <h3 class="panel-title">GeoLocation Form</h3>
+    </div>
+    <div class="panel-body" id="_Form">
+        @Html.Partial("P_Form")
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">GeoLocation List</h3>
+    </div>
+    <div class="panel-body" id="_List">
+        @Html.Partial("P_List")
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [3] }],
+            "bDestroy": true
+        });
+    });
+
+    function edit() {
+        initialize();
+    }
+
+    function DeleteRecords(id, active) {
+        var msg = "Delete";
+        if (active == 'Y') {
+            msg = "Delete";
+        }
+        swal({
+            title: "Are you sure?",
+            text: "You will " + msg.toLowerCase() + " record after click on yes.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+               function (isConfirm) {
+                   if (isConfirm) {
+                       $.ajax({
+                           url: '@Url.Action("Delete", "GeoLocation")',
+                           datatype: 'text',
+                           data: { id: id },
+                           success: function (i) {
+                               document.getElementById('_List').innerHTML = i;
+                               $('#example').dataTable({
+                                   "aoColumnDefs": [{ "bSortable": false, 'aTargets': [2] }],
+                                   "bDestroy": true
+                               });
+                           },
+                           error: function(i)
+                           {
+                               swal({
+                                   title: "" + msg + "",
+                                   text: "There is a error in record please contact administrator.",
+                                   type: "error",
+                                   timer: 2000
+                               });
+                           }
+                       });
+                       swal({
+                           title: "" + msg + "",
+                           text: "Your record has been " + msg.toLowerCase() + ".",
+                           type: "success",
+                           timer: 2000
+                       });
+                   }
+                   else {
+                       swal({
+                           title: "Cancelled",
+                           text: "Your record is safe.",
+                           type: "error",
+                           timer: 2000
+                       });
+                   }
+               });
+    }
+</script>
