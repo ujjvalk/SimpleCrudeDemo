@@ -89,6 +89,10 @@ namespace TestDemo.Controllers
             using (var repo = new EmpRepository())
             {
                 var data = repo.DeleteRecord(id);
+                if(!data)
+                {
+                    return HttpNotFound();
+                }
                 var model = repo.GetList();
                 return PartialView("P_List", model);
             }

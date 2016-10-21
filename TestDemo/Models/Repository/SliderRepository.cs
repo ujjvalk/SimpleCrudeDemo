@@ -119,9 +119,10 @@ namespace TestDemo.Models.Repository
                         data.IsDelete = true;
                         db.Entry(data).CurrentValues.SetValues(data);
                         db.SaveChanges();
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
             catch (Exception)
             {

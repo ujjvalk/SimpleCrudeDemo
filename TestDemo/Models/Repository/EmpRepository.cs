@@ -233,9 +233,10 @@ namespace TestDemo.Models.Repository
                         data.DeletedDate = DateTime.Now;
                         db.Entry(data).CurrentValues.SetValues(data);
                         db.SaveChanges();
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
             catch (Exception)
             {

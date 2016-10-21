@@ -70,6 +70,10 @@ namespace TestDemo.Controllers
                     db.DateRanges.Remove(data);
                     db.SaveChanges();
                 }
+                else
+                {
+                    return HttpNotFound();
+                }
                 ViewBag.List = db.DateRanges.ToList();
                 return PartialView("P_List");
             }

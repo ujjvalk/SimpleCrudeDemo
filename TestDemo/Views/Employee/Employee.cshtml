@@ -130,7 +130,16 @@
                                    "aoColumnDefs": [{ "bSortable": false, 'aTargets': [6, 7] }],
                                    "bDestroy": true
                                });
+                           },
+                           error: function (i) {
+                               swal({
+                                   title: "" + msg + "",
+                                   text: "There is a error in record please contact administrator.",
+                                   type: "error",
+                                   timer: 2000
+                               });
                            }
+
                        });
                        swal({
                            title: "" + msg + "",

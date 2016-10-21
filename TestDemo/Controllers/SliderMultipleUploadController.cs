@@ -35,6 +35,10 @@ namespace TestDemo.Controllers
             using (var repo = new SliderRepository())
             {
                 var data = repo.DeleteRecord(id);
+                if(!data)
+                {
+                    return HttpNotFound();
+                }
                 var model = repo.GetList();
                 return this.PartialView("P_List", model);
             }
