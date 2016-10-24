@@ -1,0 +1,34 @@
+﻿@model TestDemo.Models.CustomModels.TransactionModel
+
+<input type="hidden" value="@ViewBag.Successmessage" id="SuccessMessage" />
+<table id="example" class="display example table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Credit</th>
+            <th>Debit</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.tranList)
+        {
+            <tr>
+                <td>@item.Name</td>
+                @if (@item.Type.Trim() == "Credit")
+                {
+                    <td>@item.Amount</td>
+                    <td>-</td>
+                }
+                @if (@item.Type.Trim() == "Debit")
+                {
+                    <td>-</td>
+                    <td>@item.Amount</td>
+                }
+                <td>@item.AvailBalance</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

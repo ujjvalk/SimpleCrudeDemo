@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2 style="text-align:center;">Transaction</h2>
+<div class="panel panel-default ">
+    <div class="panel-heading">
+        <h3 class="panel-title">Transaction Form</h3>
+    </div>
+    <div class="panel-body" id="_Form">
+        @Html.Partial("P_Form")
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg" style="position: static; top: 0px; left: 68px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-md-2 control-label">User</label>
+                    <div class='col-md-3'>
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.User, "Select user", new { @class = "form-control formcontrol", @required = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Transaction List</h3>
+    </div>
+    <div class="panel-body" id="_List">
+        @Html.Partial("P_List")
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [4] }],
+            "bDestroy": true
+        });
+    });
+</script>

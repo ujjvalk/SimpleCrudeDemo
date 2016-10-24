@@ -1,0 +1,34 @@
+﻿@model TestDemo.Models.CustomModels.TransactionModel
+
+@using (Ajax.BeginForm("Index", "Transaction", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();", OnBegin = "fnvalidation();" }))
+{
+    @Html.HiddenFor(e => e.TransactionId, new { @class = "form-control formcontrol" })
+    @Html.HiddenFor(e => e.AcountId, new { @class = "form-control formcontrol" })
+    <div class="form-group row">
+        <label class="col-md-2 control-label">User</label>
+        <div class='col-md-3'>
+            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.User, "Select user", new { @class = "form-control formcontrol", @required = "required" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Transaction Type</label>
+        <div class='col-md-3'>
+            @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.TransactionType, "Select Type", new { @class = "form-control formcontrol", @required = "required" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Amount</label>
+        <div class='col-md-3'>
+            @Html.TextBox("Amount", Model.Amount, new { @class = "form-control formcontrol", @placeholder = "Amount", @title = "Amount", required = "required" })
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-lg-2">
+            <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
+            <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+        </div>
+    </div>
+}
+
