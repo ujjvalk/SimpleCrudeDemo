@@ -45,9 +45,101 @@
 
 <script>
     $(document).ready(function () {
+        datatable();
+    });
+    function datatable() {
         $('#example').DataTable({
-            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [4] }],
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [3] }],
+            "bSort": false,
             "bDestroy": true
         });
+    }
+    function onsuccess()
+    {
+        datatable();
+    }
+    $("#Type").change(function () {
+        if ($("#Name").val() != "") {
+            if ($("#Type").val() == "Transfer") {
+                $("#transferToDiv").css("display", "block");
+                var currentId = $("#Name").val();
+                $.ajax({
+                    url: "@Url.Action("GetToUser", "Transaction")",
+                    data: { id: $("#Name").val() },
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#TransferTo").empty();
+                        $.each(data, function (i, val) {
+                            $("#TransferTo").append('<option value="' + val.AcountId + '">' + val.Name + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve users.' + ex);
+                    }
+                });
+            }
+            else {
+                $("#transferToDiv").css("display", "none");
+                $("#TransferTo").empty();
+            }
+        }
+        else {
+            alert("select user first!");
+            $("#Type").val($("#Typeoption:first").val());
+            $("#Name").focus();
+        }
     });
+
+    $("#Name").change(function () {
+        $("#Type").val($("#Type option:first").val());
+        $("#transferToDiv").css("display", "none");
+        $("#TransferTo").empty();
+        $("#Amount").val('');
+        if ($("#Name").val() != "") {
+            $.ajax({
+                url: "@Url.Action("GetMaxAmount", "Transaction")",
+                data: { id: $("#Name").val() },
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.TotalBalance >= 100) {
+                        $("#Amount").attr('max', data.TotalBalance);
+                        $("#totalBal").html(data.TotalBalance);
+                        $("#totalBal").val(data.TotalBalance);
+                    }
+                    else {
+                        $("#totalBal").html(data.TotalBalance);
+                        $("#totalBal").val(data.TotalBalance);
+                        alert("Your balace is lower than 100 debit some amount");
+                        $("#Type").val('Debit');
+                        $("#Amount").focus();
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve users.' + ex);
+                }
+            });
+        }
+    });
+
+    function onBeg() {
+        var availBal = $("#totalBal").val();
+        var Type = $("#Type").val();
+        if (availBal >= 100) {
+            return true
+        }
+        else if (Type == "Debit" && availBal <= 100) {
+            return true
+        }
+        else {
+            alert("your balance is low!");
+            $("#transferToDiv").css("display", "none");
+            $("#TransferTo").empty();
+            $("#Type").val('Debit');
+            $("#Amount").focus();
+            return false;
+        }
+    }
+
 </script>

@@ -5,8 +5,8 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Credit</th>
-            <th>Debit</th>
+            <th>Transaction Type</th>
+            <th>Amount</th>
             <th>Total</th>
         </tr>
     </thead>
@@ -16,16 +16,8 @@
         {
             <tr>
                 <td>@item.Name</td>
-                @if (@item.Type.Trim() == "Credit")
-                {
-                    <td>@item.Amount</td>
-                    <td>-</td>
-                }
-                @if (@item.Type.Trim() == "Debit")
-                {
-                    <td>-</td>
-                    <td>@item.Amount</td>
-                }
+                <td>@item.Type</td>
+                <td>@item.Amount</td>
                 <td>@item.AvailBalance</td>
             </tr>
         }

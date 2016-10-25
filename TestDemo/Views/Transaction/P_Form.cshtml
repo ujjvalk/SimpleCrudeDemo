@@ -1,6 +1,6 @@
 ﻿@model TestDemo.Models.CustomModels.TransactionModel
 
-@using (Ajax.BeginForm("Index", "Transaction", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();", OnBegin = "fnvalidation();" }))
+@using (Ajax.BeginForm("Index", "Transaction", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "_List", OnSuccess = "fnSuccess();onsuccess();", OnBegin = "return onBeg();fnvalidation();" }))
 {
     @Html.HiddenFor(e => e.TransactionId, new { @class = "form-control formcontrol" })
     @Html.HiddenFor(e => e.AcountId, new { @class = "form-control formcontrol" })
@@ -15,19 +15,28 @@
         <div class='col-md-3'>
             @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.TransactionType, "Select Type", new { @class = "form-control formcontrol", @required = "required" })
         </div>
+        <div id="transferToDiv" style="display:none">
+            <label class="col-md-2 control-label">Transfer To</label>
+            <div class='col-md-3'>
+                <select id="TransferTo" name="TransferTo" class="form-control formcontrol"></select>
+            </div>
+        </div>
     </div>
     <div class="form-group row">
         <label class="col-md-2 control-label">Amount</label>
         <div class='col-md-3'>
-            @Html.TextBox("Amount", Model.Amount, new { @class = "form-control formcontrol", @placeholder = "Amount", @title = "Amount", required = "required" })
+            @Html.TextBox("Amount", Model.Amount, new { @class = "form-control formcontrol", @placeholder = "Amount", @title = "Amount", required = "required", @type = "number", @min = "100" })
         </div>
     </div>
-    
+
     <div class="form-group row">
         <div class="col-lg-2">
             <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
             <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+        </div>
+        <div class="col-lg-2">
+            <label>Total Balance</label>
+            <label id="totalBal" type="button" class="btn btn-sm btn-primary" value="0">0</label>
         </div>
     </div>
 }

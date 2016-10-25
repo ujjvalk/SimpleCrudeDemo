@@ -18,6 +18,8 @@ namespace TestDemo.Models.CustomModels
         public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> AvailBalance { get; set; }
 
+        public long TransferTo { get; set; }
+
         public List<TransactionModel> tranList { get; set; }
     }
 

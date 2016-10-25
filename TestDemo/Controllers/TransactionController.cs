@@ -18,7 +18,7 @@ namespace TestDemo.Controllers
                 var model = repo.GetList();
                 var List = repo.UserList();
                 ViewBag.User = new SelectList(List, "AcountId", "Name");
-                ViewBag.TransactionType = new SelectList(new[] { new { ID = "Credit", Name = "Credit" }, new { ID = "Debit", Name = "Debit" }, }, "ID", "Name", 1);
+                ViewBag.TransactionType = new SelectList(new[] { new { ID = "Credit", Name = "Credit" }, new { ID = "Debit", Name = "Debit" }, new { ID = "Transfer", Name = "Transfer" }, }, "ID", "Name", 1);
                 return View(model);
             }
         }
@@ -39,7 +39,7 @@ namespace TestDemo.Controllers
                 var List = repo.UserList();
                 ViewBag.User = new SelectList(List, "AcountId", "Name");
             }
-            ViewBag.TransactionType = new SelectList(new[] { new { ID = "Credit", Name = "Credit" }, new { ID = "Debit", Name = "Debit" }, }, "ID", "Name", 1);
+            ViewBag.TransactionType = new SelectList(new[] { new { ID = "Credit", Name = "Credit" }, new { ID = "Debit", Name = "Debit" }, new { ID = "Transfer", Name = "Transfer" }, }, "ID", "Name", 1);
             return View();
         }
 
@@ -53,5 +53,29 @@ namespace TestDemo.Controllers
 
             return View();
         }
+
+        public JsonResult GetToUser(long id = 0)
+        {
+
+            using (var repo = new TransactionRepository())
+            {
+                var List = repo.UserList().Where(e => e.AcountId != id).Select(a=>new {a.AcountId,a.Name}).ToList();
+
+                return Json(List, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public JsonResult GetMaxAmount(long id = 0)
+        {
+
+            using (var repo = new TransactionRepository())
+            {
+                var data = repo.UserList().Where(e => e.AcountId == id).Select(a => new { a.TotalBalance }).FirstOrDefault();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using TestDemo.Models.CustomModels;
@@ -71,7 +72,11 @@ namespace TestDemo.Models.Repository
                         {
                             bankAcountData.TotalBalance += model.Amount;
                         }
-
+                        if(model.Type == "Transfer")
+                        {
+                            bankAcountData.TotalBalance -= model.Amount;
+                            db.Database.ExecuteSqlCommand("update  BankAcount set TotalBalance +=" + model.Amount + "where AcountId=" + model.TransferTo + ";");
+                        }
                         Transaction transactionData = new Transaction();
                         transactionData.AcountId = model.AcountId;
                         transactionData.Amount = model.Amount;
