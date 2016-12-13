@@ -6,29 +6,29 @@
     @Html.HiddenFor(e => e.Id, new { @class = "form-control formcontrol" })
 
     <div class="form-group row">
-
-        <label class="col-md-1 control-label">Address</label>
+        <label class="col-md-2 control-label">Address</label>
         <div class='col-md-4'>
-            @Html.TextBox("GeoLocationAddress", Model.GeoLocationAddress, new { @class = "form-control formcontrol", @placeholder = "GeoLocationAddress", @title = "GeoLocationAddress", @id = "GeoLocationAddress", @required = "required" })
+            @Html.TextBox("GeoLocationAddress", Model.GeoLocationAddress, new { @class = "form-control formcontrol", @placeholder = "GeoLocation Address", @title = "GeoLocationAddress", @id = "GeoLocationAddress", @required = "required" })
         </div>
-        
     </div>
     <div class="form-group row">
 
-        <label class="col-md-1 control-label">Latitude</label>
-        <div class='col-md-3'>
+        <label class="col-md-2 control-label">Latitude</label>
+        <div class='col-md-4'>
             @Html.TextBox("Latitude", Model.Latitude, new { @class = "form-control formcontrol", @placeholder = "Latitude", @title = "Latitude", @id = "Latitude", @required = "required" })
         </div>
-
-        <label class="col-md-1 control-label">Longiude</label>
-        <div class='col-md-3'>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-2 control-label">Longiude</label>
+        <div class='col-md-4'>
             @Html.TextBox("Longiude", Model.Longiude, new { @class = "form-control formcontrol", @placeholder = "Longiude", @title = "Longiude", @id = "Longiude", @required = "required" })
         </div>
 
-        <div class="col-lg-2">
+    </div>
+    <div class="form-group row">
+        <div class="col-md-6 col-md-offset-2">
             <input type="submit" class="btn btn-sm btn-success" id="validateBtn" value="Save">
             <button type="button" class="btn btn-sm btn-primary" onclick="fnReset();OnReset();">Reset</button>
         </div>
     </div>
-
 }
