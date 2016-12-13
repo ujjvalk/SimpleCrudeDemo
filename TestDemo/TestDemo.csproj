@@ -162,15 +162,47 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DateRangeController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\GeoLocationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
+    <Compile Include="Controllers\SliderMultipleUploadController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BankAcount.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\city.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\country.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomModels\EmpModel.cs" />
+    <Compile Include="Models\CustomModels\GeoLocationModel.cs" />
+    <Compile Include="Models\CustomModels\SliderModel.cs" />
+    <Compile Include="Models\CustomModels\TransactionModel.cs" />
+    <Compile Include="Models\DateRange.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GeoLocation.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Repository\EmpRepository.cs" />
+    <Compile Include="Models\Repository\GeoLocationRepository.cs" />
+    <Compile Include="Models\Repository\SliderRepository.cs" />
+    <Compile Include="Models\Repository\TransactionRepository.cs" />
+    <Compile Include="Models\state.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblDesignation.cs">
       <DependentUpon>TestData.tt</DependentUpon>
     </Compile>
@@ -178,6 +210,12 @@
       <DependentUpon>TestData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblHobby.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblRole.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblSlider.cs">
       <DependentUpon>TestData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestData.Context.cs">
@@ -195,11 +233,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestData.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Transaction.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\20_AUG Schema And Data.sql" />
+    <Content Include="App_Data\TestDemo_24_10_2016.sql" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\notavailable.png" />
@@ -280,8 +321,28 @@
     <Content Include="Views\Employee\Employee.cshtml" />
     <Content Include="Views\Employee\P_Form.cshtml" />
     <Content Include="Views\Employee\P_List.cshtml" />
+    <Content Include="Views\Slider\Slider.cshtml" />
+    <Content Include="Views\Slider\P_Form.cshtml" />
+    <Content Include="Views\Slider\P_List.cshtml" />
+    <Content Include="Views\SliderMultipleUpload\SliderMultipleUpload.cshtml" />
+    <Content Include="Views\SliderMultipleUpload\P_Form.cshtml" />
+    <Content Include="Views\SliderMultipleUpload\P_List.cshtml" />
+    <Content Include="Views\DateRange\Index.cshtml" />
+    <Content Include="Views\DateRange\P_Form.cshtml" />
+    <Content Include="Views\DateRange\P_List.cshtml" />
+    <Content Include="Views\GeoLocation\Index.cshtml" />
+    <Content Include="Views\GeoLocation\P_Form.cshtml" />
+    <Content Include="Views\GeoLocation\P_List.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Transaction\P_Form.cshtml" />
+    <Content Include="Views\Transaction\P_List.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Upload\Slider\" />
+    <Folder Include="Views\GeoLoc\" />
+    <Folder Include="Views\SliderUpload\" />
+    <Folder Include="Views\Student\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

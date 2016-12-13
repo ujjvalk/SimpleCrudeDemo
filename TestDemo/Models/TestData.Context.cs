@@ -27,6 +27,16 @@ namespace TestDemo.Models
     
         public virtual DbSet<tblDesignation> tblDesignations { get; set; }
         public virtual DbSet<tblHobby> tblHobbies { get; set; }
+        public virtual DbSet<tblSlider> tblSliders { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<tblRole> tblRoles { get; set; }
+        public virtual DbSet<city> cities { get; set; }
+        public virtual DbSet<country> countries { get; set; }
+        public virtual DbSet<DateRange> DateRanges { get; set; }
+        public virtual DbSet<GeoLocation> GeoLocations { get; set; }
+        public virtual DbSet<state> states { get; set; }
+        public virtual DbSet<BankAcount> BankAcounts { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }

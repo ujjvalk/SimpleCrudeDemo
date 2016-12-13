@@ -41,6 +41,7 @@ namespace TestDemo.Controllers
                 else
                 {
                     ViewBag.Successmessage = "Please try again";
+                    return HttpNotFound();
                 }
                 ViewBag.List = db.DateRanges.ToList();
             }

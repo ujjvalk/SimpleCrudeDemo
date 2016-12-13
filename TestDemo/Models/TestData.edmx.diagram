@@ -4,10 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6eef08b9aefe42f8a55376d7988bae4e" Name="Diagram1">
-        <EntityTypeShape EntityType="TestDemoModel.tblDesignation" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TestDemoModel.tblHobby" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TestDemoModel.tblEmployee" Width="1.5" PointX="2.5" PointY="0.75" />
+      <Diagram DiagramId="6eef08b9aefe42f8a55376d7988bae4e" Name="Diagram1" ShowGrid="true" SnapToGrid="true">
+        <EntityTypeShape EntityType="TestDemoModel.tblDesignation" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDemoModel.tblHobby" Width="1.5" PointX="4.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDemoModel.tblSlider" Width="1.5" PointX="2.625" PointY="2.25" />
+        <EntityTypeShape EntityType="TestDemoModel.tblEmployee" Width="1.5" PointX="0.875" PointY="0.75" />
+        <EntityTypeShape EntityType="TestDemoModel.Customer" Width="1.5" PointX="0.875" PointY="4.625" />
+        <EntityTypeShape EntityType="TestDemoModel.tblRole" Width="1.5" PointX="6.125" PointY="0.75" />
+        <EntityTypeShape EntityType="TestDemoModel.city" Width="1.5" PointX="4.375" PointY="2.25" />
+        <EntityTypeShape EntityType="TestDemoModel.country" Width="1.5" PointX="2.625" PointY="4.25" />
+        <EntityTypeShape EntityType="TestDemoModel.DateRange" Width="1.5" PointX="4.375" PointY="4.625" />
+        <EntityTypeShape EntityType="TestDemoModel.GeoLocation" Width="1.5" PointX="6.125" PointY="2.5" />
+        <EntityTypeShape EntityType="TestDemoModel.state" Width="1.5" PointX="6.125" PointY="4.5" />
+        <EntityTypeShape EntityType="TestDemoModel.BankAcount" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TestDemoModel.Transaction" Width="1.5" PointX="7.75" PointY="2.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
