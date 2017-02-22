@@ -86,24 +86,14 @@
                     <img src="../../Content/images/notavailable.png" alt="no image" id="Image" />
                 }
             </div>
-            @if (Model != null && Model.EmpImage != null)
-            {
-                <div style="display:block;" id="divchange">
-                    <span class="btn btn-info btn-file">
-                        <span class="fileupload-exists" onclick="$('#EmpImage').click();"><i class="fa fa-undo"></i> Change</span>
-                    </span>&nbsp;
-                    <a href="javascript:void(0);" class="btn btn-danger fileupload-exists" onclick="RemoveImage();"><i class="fa fa-trash-o"></i> Remove</a>
-                </div>
-            }
-            else
-            {
-                <div style="display:none;" id="divchange">
-                    <span class="btn btn-info btn-file">
-                        <span class="fileupload-exists" onclick="$('#EmpImage').click();"><i class="fa fa-undo"></i> Change</span>
-                    </span>&nbsp;
-                    <a href="javascript:void(0);" class="btn btn-danger fileupload-exists" onclick="RemoveImage();"><i class="fa fa-trash-o"></i> Remove</a>
-                </div>
-            }
+
+            <div style="display:none;" id="divchange">
+                <span class="btn btn-info btn-file">
+                    <span class="fileupload-exists" onclick="$('#EmpImage').click();"><i class="fa fa-undo"></i> Change</span>
+                </span>&nbsp;
+                <a href="javascript:void(0);" class="btn btn-danger fileupload-exists" onclick="RemoveImage();"><i class="fa fa-trash-o"></i> Remove</a>
+            </div>
+
         </div>
     </div>
 

@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Student";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+
+<h2 style="text-align:center;">Student</h2>
+<div class="panel panel-default ">
+    <div class="panel-heading">
+        <h3 class="panel-title">Student Form</h3>
+    </div>
+    <div class="panel-body" id="_Form">
+        @Html.Partial("P_Form")
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Student List</h3>
+    </div>
+    <div class="panel-body" id="_List">
+        @Html.Partial("P_List")
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [7, 8] }],
+            "bDestroy": true
+        });
+        //Upload image
+        $("#Photo").change(function () {
+            readURL(this);
+        });
+        $('#BirthDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: "today",
+            yearRange: "-100:+0",
+            //dateFormat: 'dd-mm-yy',
+            defaultDate: new Date(1985, 00, 01)
+        });
+    });
+
+    function OnReset() {
+        $('#example').dataTable({
+            "aoColumnDefs": [{ "bSortable": false, 'aTargets': [7, 8] }],
+            "bDestroy": true
+        });
+        RemoveImage();
+    }
+
+    function DeleteRecords(id, active) {
+        var msg = "Delete";
+        if (active == 'Y') {
+            msg = "Delete";
+        }
+        swal(
+               {
+                   title: "Are you sure?",
+                   text: "You will " + msg.toLowerCase() + " record after click on yes.",
+                   type: "warning",
+                   showCancelButton: true,
+                   confirmButtonColor: "#DD6B55",
+                   confirmButtonText: "Yes",
+                   cancelButtonText: "No",
+                   closeOnConfirm: false,
+                   closeOnCancel: false
+               },
+               function (isConfirm) {
+                   if (isConfirm) {
+                       $.ajax({
+                           type: 'Post',
+                           url: '@Url.Action("Delete", "Student")',
+                           datatype: 'text',
+                           data: { id: id },
+                           success: function (i) {
+                               document.getElementById('_List').innerHTML = i;
+                               $('#example').dataTable({
+                                   "aoColumnDefs": [{ "bSortable": false, 'aTargets': [ 7,8] }],
+                                   "bDestroy": true
+                               });
+                           },
+                           error: function (i) {
+                               swal({
+                                   title: "" + msg + "",
+                                   text: "There is a error in record please contact administrator.",
+                                   type: "error",
+                                   timer: 2000
+                               });
+                           }
+
+                       });
+                       swal({
+                           title: "" + msg + "",
+                           text: "Your record has been " + msg.toLowerCase() + ".",
+                           type: "success",
+                           timer: 2000
+                       });
+                   }
+                   else {
+                       swal({
+                           title: "Cancelled",
+                           text: "Your record is safe.",
+                           type: "error",
+                           timer: 2000
+                       });
+                   }
+               });
+    }
+
+    //ImageUpload
+    function edit() {
+        $("#BirthDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: "today",
+            //dateFormat: 'dd-mm-yy',
+        });
+
+        $("#Photo").change(function () {
+            readURL(this);
+        });
+
+    }
+
+    function readURL(input) {
+        var width, height;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = new Image();
+                img.onload = function () {
+                    width = this.width;
+                    height = this.height;
+                }
+                img.src = e.target.result;
+                var path = e.target.result;
+                setTimeout(function () {
+                    uploadImage(width, height, path);
+                }, 500);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function uploadImage(width, height, path) {
+        if (width === 400 && height === 400) {
+            $('#Image').attr('src', path);
+            $('#divchange').css('display', 'block');
+            var data = new FormData();
+            data.append('file', $('#Photo')[0].files[0]);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadFile")',
+                data: data,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function () {
+                }
+            });
+        }
+        else {
+            swal({
+                title: "Size validation",
+                text: "Required image size is 400 X 400. :(",
+                type: "error",
+                timer: 2000
+            });
+            //ShowError("Required logo size is 400 X 400. :(");
+            RemoveImage();
+        }
+    }
+
+    function RemoveImage() {
+        $('#Image').attr('src', '../Content/images/notavailable.png');
+        $("#EmpImage").val("");
+        $('#divchange').css('display', 'none');
+    }
+</script>

@@ -1,0 +1,40 @@
+﻿
+@model TestDemo.Models.CustomModels.StudentModel
+
+<input type="hidden" value="@ViewBag.Successmessage" id="SuccessMessage" />
+<table id="example" class="display example table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>BirthDate</th>
+            <th>Address</th>
+            <th>Standard</th>
+            <th>Class</th>
+            <th>Hobby</th>
+            <th style="text-align:center;">Image</th>
+            <th style="text-align:center;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.StudentList)
+        {
+            <tr>
+                <td>@item.StudentName</td>
+                <td>@item.StudentAge</td>
+                <td>@item.BirthDate.Value.ToShortDateString()</td>
+                <td>@item.StudentAddress</td>
+                <td>@item.Standard</td>
+                <td>@item.Class</td>
+                <td>@item.Hobby</td>
+                <td style="text-align:center;"><img src="@item.Photo" width="50px" height="50px" /></td>
+                <td style="text-align:center;">
+                    @Ajax.ActionLink(" ", "Student", new { studentId = item.StudentId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "_Form", OnSuccess = "scrolltop();", OnComplete = "edit();" }, new { @Class = "btn btn-info glyphicon glyphicon-edit icon-white", @id = "btnedit" })
+
+                    <a onclick="DeleteRecords('@item.StudentId', 'Y') " href="javascript:;" class="btn btn-danger glyphicon glyphicon-trash icon-white"></a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
