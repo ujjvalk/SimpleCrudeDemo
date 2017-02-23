@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayoutPage.cshtml";
+}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>  
+
+<h2>Dashboard</h2>
+
+<div id="container" style="min-width: 350px; height: 350px; max-width: 600px; margin: 0 auto"></div> 
+
+<script type="text/javascript">
+
+        $(function () {
+            $.ajax({
+                url: '/Dashboard/TransactionSummary',
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                processData: false,
+                cache: false,
+                delay: 15,
+                success: function (data) {
+                    // alert(data);
+                    var series = new Array();
+                    for (var i in data) {
+                        var serie = new Array(data[i].Value, data[i].Item);
+                        series.push(serie);
+                    }
+                    DrawPieChart(series);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+        function DrawPieChart(series) {
+            $('#container').highcharts({
+
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: 1, //null,
+                    plotShadow: false
+                },
+                title: {
+                    text: ' Transaction Summary'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Task Status',
+                    data: series
+                }]
+            });
+        }
+</script>  
