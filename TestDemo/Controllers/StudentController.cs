@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -78,7 +79,7 @@ namespace TestDemo.Controllers
         [HttpPost]
         public ActionResult Student(StudentModel model, string[] hobby)
         {
-            var hobbyStr = String.Join(",", hobby);
+            var hobbyStr = string.Join(",", hobby);
             model.Hobby = hobbyStr;
             model.Photo = TempData["Photo"].ToString();
             using (var repo = new StudentRepository())
@@ -113,7 +114,7 @@ namespace TestDemo.Controllers
                 var file = Request.Files[i];
                 if (file != null)
                 {
-                    var txt = DateTime.Now.Ticks;
+                    var txt = DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss", CultureInfo.InvariantCulture);
                     const string filePath = @"/Upload/";
                     if (!Directory.Exists(Server.MapPath(filePath)))
                     {
