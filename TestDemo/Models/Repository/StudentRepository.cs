@@ -1,29 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TestDemo.Models.CustomModels;
 
 namespace TestDemo.Models.Repository
 {
-    public class StudentRepository:IDisposable
+    public class StudentRepository : IDisposable
     {
 
-        #region GetClass
-
-        //public List<StudentClass> ClassList()
-        //{
-        //    using (var db = new DemoEntities())
-        //    {
-        //        return db.StudentClasses.ToList();
-        //    }
-        //}
-
-
-
-        #endregion
-
-        #region Get BannerType
-        public SelectList ClassList(int id)
+        #region Get StudentClasses
+        public SelectList ClassList(int classId)
         {
             //List<SelectListItem> items = new List<SelectListItem>
             //{
@@ -41,7 +28,41 @@ namespace TestDemo.Models.Repository
             {
                 var classsList = (from rm in db.StudentClasses
                                   select new { Value = rm.ClassId, Text = rm.Class }).ToList();
-                return new SelectList(classsList, "Value", "Text", id);
+                return new SelectList(classsList, "Value", "Text", classId);
+            }
+        }
+        #endregion
+
+        #region Get StudentCourse
+        public List<StudentCourse> CourseList()
+        {
+            using (var db = new TestDemoEntities())
+            {
+                var data = db.StudentCourses.ToList();
+                return data;
+            }
+        }
+        #endregion
+
+        #region Get StudentCourseSelected
+        public List<StudentCourse> SelectedCourseList(int studentId)
+        {
+            using (var db = new TestDemoEntities())
+            {
+                var selectedValue = (from c in db.StudentCourses
+                                     join m in db.StudentCourseMappings on c.CourseId equals m.courseId
+                                     where m.studentId == studentId
+                                     select new
+                                     {
+                                         CourseId = m.courseId,
+                                         CourseName = c.CourseName
+                                     }).AsEnumerable()
+                                                   .Select(x => new StudentCourse
+                                                   {
+                                                       CourseId = x.CourseId,
+                                                       CourseName = x.CourseName
+                                                   }).ToList();
+                return selectedValue;
             }
         }
         #endregion
@@ -153,8 +174,19 @@ namespace TestDemo.Models.Repository
                         pageData.studentAge = model.StudentAge;
                         pageData.studentName = model.StudentName;
                         pageData.hobby = model.Hobby;
+
                         db.Students.Add(pageData);
                         db.SaveChanges();
+                        foreach (var item in model.StudentCourse)
+                        {
+                            StudentCourseMapping obj = new StudentCourseMapping
+                            {
+                                courseId = Convert.ToInt32(item),
+                                studentId = db.Students.Max(e => e.studentId)
+                            };
+                            db.StudentCourseMappings.Add(obj);
+                            db.SaveChanges();
+                        }
                     }
                 }
                 return true;
@@ -187,6 +219,22 @@ namespace TestDemo.Models.Repository
                         data.studentName = editModel.StudentName;
                         data.hobby = editModel.Hobby;
                         db.SaveChanges();
+                        var removeData = db.StudentCourseMappings.Where(e => e.studentId == editModel.StudentId).ToList();
+                        foreach (var item in removeData)
+                        {
+                            db.StudentCourseMappings.Remove(item);
+                        }
+
+                        foreach (var item in editModel.StudentCourse)
+                        {
+                            StudentCourseMapping obj = new StudentCourseMapping
+                            {
+                                courseId = Convert.ToInt32(item),
+                                studentId = editModel.StudentId
+                            };
+                            db.StudentCourseMappings.Add(obj);
+                            db.SaveChanges();
+                        }
                         return true;
                     }
                 }

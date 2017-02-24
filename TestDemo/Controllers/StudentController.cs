@@ -11,6 +11,7 @@ namespace TestDemo.Controllers
     public class StudentController : Controller
     {
         // GET: /Student/
+        #region GET
         public ActionResult Student(int studentId = 0)
         {
             using (var repo = new StudentRepository())
@@ -20,6 +21,7 @@ namespace TestDemo.Controllers
                     var model = new StudentModel();
                     model = repo.GetList();
                     ViewBag.StudentClass = repo.ClassList(0);
+                    model.StudentCourseList = repo.CourseList();
                     return View(model);
                 }
                 ViewBag.Edit = "Edit";
@@ -31,6 +33,8 @@ namespace TestDemo.Controllers
                         ViewBag.ImagePath = data.Photo;
                         TempData["Photo"] = data.Photo;
                     }
+                    data.StudentCourseList = repo.CourseList();
+                    data.StudentCourseListSelected = repo.SelectedCourseList(data.StudentId);
                     ViewBag.StudentClass = repo.ClassList(data.ClassId ?? 0);
 
                     if (!string.IsNullOrEmpty(data.Hobby))
@@ -52,18 +56,6 @@ namespace TestDemo.Controllers
                                     case "Reading":
                                         ViewBag.Reading = true;
                                         break;
-                                        //case "Wednesday":
-                                        //    ViewBag.Wednesday = true;
-                                        //    break;
-                                        //case "Thursday":
-                                        //    ViewBag.Thursday = true;
-                                        //    break;
-                                        //case "Friday":
-                                        //    ViewBag.Friday = true;
-                                        //    break;
-                                        //case "Saturday":
-                                        //    ViewBag.Saturday = true;
-                                        //    break;
                                 }
                             }
                         }
@@ -73,9 +65,10 @@ namespace TestDemo.Controllers
 
                 return PartialView("P_Form", data);
             }
-        }
+        } 
+        #endregion
 
-
+        #region POST
         [HttpPost]
         public ActionResult Student(StudentModel model, string[] hobby)
         {
@@ -89,8 +82,10 @@ namespace TestDemo.Controllers
                 var data = repo.GetList();
                 return PartialView("P_List", data);
             }
-        }
+        } 
+        #endregion
 
+        #region Delete
         public ActionResult Delete(int id = 0)
         {
             using (var repo = new StudentRepository())
@@ -103,7 +98,8 @@ namespace TestDemo.Controllers
                 var model = repo.GetList();
                 return PartialView("P_List", model);
             }
-        }
+        } 
+        #endregion
 
         #region Upload File
         [HttpPost]

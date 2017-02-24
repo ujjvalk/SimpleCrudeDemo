@@ -20,5 +20,11 @@ namespace TestDemo.Models.CustomModels
         public string Class { get; set; }
 
         public List<StudentModel> StudentList { get; set; }
+        public virtual ICollection<StudentCourse> StudentCourseList { get; set; }
+        public virtual ICollection<StudentCourse> StudentCourseListSelected { get; set; }
+        
+
+        public string[] StudentCourse { get; set; }
     }
+
 }

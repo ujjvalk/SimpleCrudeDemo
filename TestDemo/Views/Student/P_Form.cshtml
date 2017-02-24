@@ -6,25 +6,25 @@
     @Html.HiddenFor(m => m.StudentId, new { @class = "form-control formcontrol" })
 
     <div class="form-group row">
-        <label class="col-md-1 control-label">Name*</label>
-        <div class="col-md-3">
+        <label class="col-md-2 control-label">Name*</label>
+        <div class="col-md-4">
             @Html.TextBox("StudentName", Model.StudentName, new { @class = "form-control formcontrol", @placeholder = "Name", @title = "Name", required = "required", @maxlength = "50" })
         </div>
 
-        <label class="col-md-1 control-label">Age*</label>
-        <div class="col-md-3">
+        <label class="col-md-2 control-label">Age*</label>
+        <div class="col-md-4">
             @Html.TextBox("StudentAge", Model.StudentAge, new { @class = "form-control formcontrol", @placeholder = "AGE", @title = "AGE", required = "required", @max = 50, @min = 3, @type = "number" })
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="col-md-1 control-label">Standard*</label>
-        <div class="col-md-3">
+        <label class="col-md-2 control-label">Standard*</label>
+        <div class="col-md-4">
             @Html.TextBox("Standard", Model.Standard, new { @class = "form-control formcontrol", @placeholder = "Standard", @title = "Standard", required = "required", @max = 12, @min = 1, @type = "number" })
         </div>
 
-        <label class="col-md-1 control-label">Class*</label>
-        <div class="col-md-3">
+        <label class="col-md-2 control-label">Class*</label>
+        <div class="col-md-4">
             @Html.DropDownListFor(m => m.ClassId, (IEnumerable<SelectListItem>)ViewBag.StudentClass, "Select Class", new { @class = "form-control formcontrol", @required = "required" })
         </div>
     </div>
@@ -33,8 +33,8 @@
     </div>
 
     <div class="form-group row">
-        <label class="col-md-1 control-label">Birthdate*</label>
-        <div class='col-md-3'>
+        <label class="col-md-2 control-label">Birthdate*</label>
+        <div class='col-md-4'>
             @if (Model.BirthDate != null)
             {
                 @Html.TextBox("BirthDate", Model.BirthDate.Value.ToShortDateString(), new { @class = "form-control formcontrol", @placeholder = "Birthdate", @title = "Birthdate", @id = "BirthDate", @required = "required" })
@@ -46,12 +46,25 @@
 
         </div>
 
-        <label class="col-md-1 control-label">Address</label>
-        <div class="col-md-3">
+        <label class="col-md-2 control-label">Address</label>
+        <div class="col-md-4">
             @Html.TextArea("StudentAddress", Model.StudentAddress, new { @class = "form-control formcontrol", @placeholder = "Address", @title = "Address" })
         </div>
     </div>
+    <div class="form-group row">
 
+        <label class="col-md-2 control-label">Select Course</label>
+        <div class="col-md-4">
+            @if (ViewBag.Edit == "Edit")
+            {
+                @Html.ListBoxFor(m => m.StudentCourse, new MultiSelectList(Model.StudentCourseList, "CourseId", "CourseName", Model.StudentCourseListSelected.Select(e => e.CourseId)), new { @class = "chzn-select", data_placeholder = "Courses..." })
+            }
+            else
+            {
+                @Html.ListBoxFor(m => m.StudentCourse, new MultiSelectList(Model.StudentCourseList, "CourseId", "CourseName"), new { @class = "chzn-select form-control formcontrol", data_placeholder = "Courses..." })
+            }
+        </div>
+    </div>
     <div class="form-group row">
         <label class="col-md-2 control-label">Hobby</label>
         <div class="col-md-8">
@@ -73,7 +86,7 @@
     </div>
     <div class="form-group row">
         <label for="Photo" class="col-md-2 control-label">Image</label>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <input type="file" class="default formcontrol" id="Photo" style="color:transparent;width:110px; border:0px" />
             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 160px; max-height: 150px; line-height: 20px; margin-top: 15px;">
                 @if (Model != null && Model.Photo != null)
@@ -95,6 +108,7 @@
 
         </div>
     </div>
+   
 
     <div class="form-group row">
         <div class="col-lg-offset-2 col-lg-10">
