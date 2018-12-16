@@ -38,5 +38,9 @@ namespace TestDemo.Models
         public virtual DbSet<state> states { get; set; }
         public virtual DbSet<BankAcount> BankAcounts { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<StudentClass> StudentClasses { get; set; }
+        public virtual DbSet<StudentCourse> StudentCourses { get; set; }
+        public virtual DbSet<StudentCourseMapping> StudentCourseMappings { get; set; }
     }
 }

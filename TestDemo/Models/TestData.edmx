@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TestDemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TestDemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BankAcount">
           <Key>
             <PropertyRef Name="AcountId" />
@@ -78,6 +78,43 @@
           <Property Name="latitude" Type="float" Nullable="false" />
           <Property Name="longitude" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="studentAge" Type="int" />
+          <Property Name="studentAddress" Type="nvarchar(max)" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="ClassId" Type="int" />
+          <Property Name="Standard" Type="int" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="300" />
+          <Property Name="hobby" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="StudentClass">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Class" Type="nvarchar" MaxLength="5" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StudentCourseMapping">
+          <Key>
+            <PropertyRef Name="StuCourseMapId" />
+          </Key>
+          <Property Name="StuCourseMapId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="studentId" Type="int" Nullable="false" />
+          <Property Name="courseId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblDesignation">
           <Key>
             <PropertyRef Name="DesignationId" />
@@ -138,6 +175,30 @@
           <Property Name="Amount" Type="decimal" Precision="12" Scale="2" />
           <Property Name="AvailBalance" Type="decimal" Precision="12" Scale="2" />
         </EntityType>
+        <Association Name="FK_Student_StudentClass">
+          <End Role="StudentClass" Type="Self.StudentClass" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentClass">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_BankAcount">
+          <End Role="BankAcount" Type="Self.BankAcount" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAcount">
+              <PropertyRef Name="AcountId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="AcountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TestDemoModelStoreContainer">
           <EntitySet Name="BankAcount" EntityType="Self.BankAcount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
@@ -146,12 +207,24 @@
           <EntitySet Name="DateRange" EntityType="Self.DateRange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeoLocation" EntityType="Self.GeoLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentClass" EntityType="Self.StudentClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentCourseMapping" EntityType="Self.StudentCourseMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDesignation" EntityType="Self.tblDesignation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblHobby" EntityType="Self.tblHobby" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSlider" EntityType="Self.tblSlider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Student_StudentClass" Association="Self.FK_Student_StudentClass">
+            <End Role="StudentClass" EntitySet="StudentClass" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_BankAcount" Association="Self.FK_Transaction_BankAcount">
+            <End Role="BankAcount" EntitySet="BankAcount" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -171,6 +244,18 @@
           <EntitySet Name="states" EntityType="TestDemoModel.state" />
           <EntitySet Name="BankAcounts" EntityType="TestDemoModel.BankAcount" />
           <EntitySet Name="Transactions" EntityType="TestDemoModel.Transaction" />
+          <EntitySet Name="Students" EntityType="TestDemoModel.Student" />
+          <EntitySet Name="StudentClasses" EntityType="TestDemoModel.StudentClass" />
+          <EntitySet Name="StudentCourses" EntityType="TestDemoModel.StudentCourse" />
+          <EntitySet Name="StudentCourseMappings" EntityType="TestDemoModel.StudentCourseMapping" />
+          <AssociationSet Name="FK_Transaction_BankAcount" Association="TestDemoModel.FK_Transaction_BankAcount">
+            <End Role="BankAcount" EntitySet="BankAcounts" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_StudentClass" Association="TestDemoModel.FK_Student_StudentClass">
+            <End Role="StudentClass" EntitySet="StudentClasses" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tblDesignation">
           <Key>
@@ -294,6 +379,7 @@
           <Property Name="AcountId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TotalBalance" Type="Decimal" Precision="12" Scale="2" />
+          <NavigationProperty Name="Transactions" Relationship="TestDemoModel.FK_Transaction_BankAcount" FromRole="BankAcount" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -304,7 +390,71 @@
           <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Amount" Type="Decimal" Precision="12" Scale="2" />
           <Property Name="AvailBalance" Type="Decimal" Precision="12" Scale="2" />
+          <NavigationProperty Name="BankAcount" Relationship="TestDemoModel.FK_Transaction_BankAcount" FromRole="Transaction" ToRole="BankAcount" />
         </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="studentAge" Type="Int32" />
+          <Property Name="studentAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="ClassId" Type="Int32" />
+          <Property Name="Standard" Type="Int32" />
+          <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="hobby" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudentClass" Relationship="TestDemoModel.FK_Student_StudentClass" FromRole="Student" ToRole="StudentClass" />
+        </EntityType>
+        <EntityType Name="StudentClass">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Class" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Students" Relationship="TestDemoModel.FK_Student_StudentClass" FromRole="StudentClass" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StudentCourseMapping">
+          <Key>
+            <PropertyRef Name="StuCourseMapId" />
+          </Key>
+          <Property Name="StuCourseMapId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="studentId" Type="Int32" Nullable="false" />
+          <Property Name="courseId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Transaction_BankAcount">
+          <End Type="TestDemoModel.BankAcount" Role="BankAcount" Multiplicity="0..1" />
+          <End Type="TestDemoModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAcount">
+              <PropertyRef Name="AcountId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="AcountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_StudentClass">
+          <End Type="TestDemoModel.StudentClass" Role="StudentClass" Multiplicity="0..1" />
+          <End Type="TestDemoModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentClass">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -454,6 +604,47 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="AcountId" ColumnName="AcountId" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="TestDemoModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="hobby" ColumnName="hobby" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="studentAddress" ColumnName="studentAddress" />
+                <ScalarProperty Name="studentAge" ColumnName="studentAge" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentClasses">
+            <EntityTypeMapping TypeName="TestDemoModel.StudentClass">
+              <MappingFragment StoreEntitySet="StudentClass">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourses">
+            <EntityTypeMapping TypeName="TestDemoModel.StudentCourse">
+              <MappingFragment StoreEntitySet="StudentCourse">
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourseMappings">
+            <EntityTypeMapping TypeName="TestDemoModel.StudentCourseMapping">
+              <MappingFragment StoreEntitySet="StudentCourseMapping">
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="StuCourseMapId" ColumnName="StuCourseMapId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

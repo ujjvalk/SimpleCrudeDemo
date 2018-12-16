@@ -12,17 +12,10 @@ namespace TestDemo.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BankAcount
+    public partial class StudentCourseMapping
     {
-        public BankAcount()
-        {
-            this.Transactions = new HashSet<Transaction>();
-        }
-    
-        public long AcountId { get; set; }
-        public string Name { get; set; }
-        public Nullable<decimal> TotalBalance { get; set; }
-    
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public long StuCourseMapId { get; set; }
+        public int studentId { get; set; }
+        public int courseId { get; set; }
     }
 }

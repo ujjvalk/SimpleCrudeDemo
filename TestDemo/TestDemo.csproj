@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -162,12 +163,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DateRangeController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\GeoLocationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\SliderMultipleUploadController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -188,6 +191,7 @@
     <Compile Include="Models\CustomModels\EmpModel.cs" />
     <Compile Include="Models\CustomModels\GeoLocationModel.cs" />
     <Compile Include="Models\CustomModels\SliderModel.cs" />
+    <Compile Include="Models\CustomModels\StudentModel.cs" />
     <Compile Include="Models\CustomModels\TransactionModel.cs" />
     <Compile Include="Models\DateRange.cs">
       <DependentUpon>TestData.tt</DependentUpon>
@@ -199,8 +203,21 @@
     <Compile Include="Models\Repository\EmpRepository.cs" />
     <Compile Include="Models\Repository\GeoLocationRepository.cs" />
     <Compile Include="Models\Repository\SliderRepository.cs" />
+    <Compile Include="Models\Repository\StudentRepository.cs" />
     <Compile Include="Models\Repository\TransactionRepository.cs" />
     <Compile Include="Models\state.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentClass.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentCourse.cs">
+      <DependentUpon>TestData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentCourseMapping.cs">
       <DependentUpon>TestData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblDesignation.cs">
@@ -292,7 +309,9 @@
     <Content Include="Upload\636073105513896307.png" />
     <Content Include="Upload\636073105726759964.jpg" />
     <Content Include="Upload\636073108045406720.png" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -336,6 +355,7 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Transaction\P_Form.cshtml" />
     <Content Include="Views\Transaction\P_List.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Upload\Slider\" />

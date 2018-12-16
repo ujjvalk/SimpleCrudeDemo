@@ -18,6 +18,12 @@
         <EntityTypeShape EntityType="TestDemoModel.state" Width="1.5" PointX="6.125" PointY="4.5" />
         <EntityTypeShape EntityType="TestDemoModel.BankAcount" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="TestDemoModel.Transaction" Width="1.5" PointX="7.75" PointY="2.5" />
+        <EntityTypeShape EntityType="TestDemoModel.Student" Width="1.5" PointX="8" PointY="8" />
+        <EntityTypeShape EntityType="TestDemoModel.StudentClass" Width="1.5" PointX="5.75" PointY="8.5" />
+        <EntityTypeShape EntityType="TestDemoModel.StudentCourse" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="TestDemoModel.StudentCourseMapping" Width="1.5" PointX="2.75" PointY="8.75" />
+        <AssociationConnector Association="TestDemoModel.FK_Transaction_BankAcount" />
+        <AssociationConnector Association="TestDemoModel.FK_Student_StudentClass" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

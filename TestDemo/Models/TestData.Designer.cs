@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\LearningDemo\TestDemo\TestDemo\Models\TestData.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\project\GIT\SimpleCrudeDemo\TestDemo\Models\TestData.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

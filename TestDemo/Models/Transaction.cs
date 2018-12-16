@@ -19,5 +19,7 @@ namespace TestDemo.Models
         public string Type { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> AvailBalance { get; set; }
+    
+        public virtual BankAcount BankAcount { get; set; }
     }
 }
